@@ -21,12 +21,12 @@ path = "src/lib.rs"
 bitcoin_support = [ "bitcoin" ]
 
 [dependencies]
-rand = "0.7"
-byteorder = "1.2"
-lru-cache = "0.1.1"
-bitcoin_hashes = "0.9"
+rand = "0.8"
+byteorder = "1.5"
+lru-cache = "0.1.2"
+bitcoin_hashes = "0.15"
 
-bitcoin = { version= "0.26", features = [ "use-serde" ], optional = true }
+bitcoin = { version= "0.32.4", optional = true }
 
 [dev-dependencies]
-hex = "0.3"
+hex = "0.4"
