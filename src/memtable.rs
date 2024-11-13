@@ -187,7 +187,7 @@ impl MemTable {
             let dirty_iterator = DirtyIterator::new(&self.dirty);
             for (bucket_number, _) in dirty_iterator.enumerate().filter(|a| a.1) {
                 let bucket_pref= TableFile::table_offset(bucket_number);
-                if let Some(mut bucket) = self.buckets.write().unwrap().get_mut(bucket_number) {
+                if let Some(bucket) = self.buckets.write().unwrap().get_mut(bucket_number) {
                     let mut page = self.table_file.read_page(bucket_pref.this_page())?.unwrap_or(Self::invalid_offsets_page(bucket_pref.this_page()));
                     if let Some(ref slots) = bucket.slots {
                         let link = if slots.len() > 0 {
@@ -374,7 +374,7 @@ impl MemTable {
 
     fn modify_bucket(&mut self, bucket: usize) -> Result<(), Error> {
         self.dirty.set(bucket);
-        let bucket_page = if bucket < BUCKETS_FIRST_PAGE { 
+        let bucket_page = if bucket < BUCKETS_FIRST_PAGE {
             PRef::from(0)
         } else {
             PRef::from(((bucket - BUCKETS_FIRST_PAGE)/BUCKETS_PER_PAGE + 1) as u64 * PAGE_SIZE as u64)
